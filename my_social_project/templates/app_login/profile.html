@@ -4,7 +4,7 @@
 {{title}}
 {%endblock%}
 {% block content %}
-{%if user.profile_pic%}
+<!-- {%if user.profile_pic%}
 <P><img src="/media/{{user.profile_pic}}" alt="profile_pic" width="200px"></P>
 {%else%}
 <P><img src="/media/profile_pics/profile-pic.jpg" alt="profile_pic" width="200px"></P>
@@ -13,5 +13,11 @@
 <h5>User Name:{{user.username}}</h5>
 <h5>User Date Of Birth:{{user.dob}}</h5>
 <h5>User Website:{{user.website}}</h5>
-<h5>User Facebook profile:{{user.facebook}}</h5>
+<h5>User Facebook profile:{{user.facebook}}</h5> -->
+
+<form action=""method='POST' enctype="multipart/form-data">
+    {{form|crispy}}
+    {%csrf_token%}
+    <input type="submit" name="submit" value="submit" class="btn btn-primary btn-sm">
+</form>
 {%endblock%}
