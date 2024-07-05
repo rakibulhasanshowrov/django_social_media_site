@@ -83,7 +83,7 @@ def user(request,username):
     already_followed=Follow.objects.filter(follower=request.user,following=user_other)
     if user_other==request.user:
         return HttpResponseRedirect(reverse('app_login:profile'))
-    return render(request,'app_login/user_other.html',context={'user_other':user ,'already_followed': already_followed})
+    return render(request,'app_login/user_other.html',context={'user_other':user_other ,'already_followed': already_followed})
     
 
 @login_required
