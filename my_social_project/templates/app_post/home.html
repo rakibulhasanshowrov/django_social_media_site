@@ -1,33 +1,68 @@
-{%extends 'navbar.html'%}
-{%block title_block%}
-{{title}}
-{%endblock%}
-
-
+{% extends 'navbar.html' %}
+{% block title_block %}
+    {{ title }}
+{% endblock %}
 
 {% block content %}
-{%if search%}
-{%for user in result %}
-<div class="row">
-    <div class="col-sm-2">
-        {%if user.user_profile.profile_pic%}
-                    <img src="/media/{{user.user_profile.profile_pic}}"  width='50px' width="50px" class="rounded-circle" alt="">
-                    {%else%}
-                    <img src="/media/profile_pics/profile-pic.jpg" width='50px' width="50px" class="rounded-circle" alt="">
-                    {%endif%}
-    </div>
-    <div class="col-sm-10">
-        
-        <a href="{% url 'app_login:user' username=user.username%}"> {{user.username}} </a>
-        <br>
-        {{user.user_profile.full_name}}
-        
-    </div>
-
-</div>
-
-{%endfor%}
-
-{%else%}
-{%endif%}
-{%endblock%}
+    {% if search %}
+        {% for user in result %}
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    {% if user.user_profile.profile_pic %}
+                        <img src="/media/{{ user.user_profile.profile_pic }}" width="50px" height="50px" class="rounded-circle" alt="">
+                    {% else %}
+                        <img src="/media/profile_pics/profile-pic.jpg" width="50px" height="50px" class="rounded-circle" alt="">
+                    {% endif %}
+                </div>
+                <div class="col-sm-10">
+                    <a href="{% url 'app_login:user' username=user.username %}">{{ user.username }}</a>
+                    <br>
+                    {{ user.user_profile.full_name }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-sm-9">
+                {% for post in posts %}
+                    <div style="border:1px solid #888888">
+                        <div class="post-header p-3 d-flex align-items-center">
+                            {% if post.author.user_profile.profile_pic %}
+                                <img src="/media/{{ user.user_profile.profile_pic }}" width="40px" height="40px" class="rounded-circle" alt="">
+                            {% else %}
+                                <img src="/media/profile_pics/profile-pic.jpg" width="40px" height="40px" class="rounded-circle" alt="">
+                            {% endif %}
+                            <a href="{% url 'app_login:user' username=post.author %}" class="ms-2">{{ post.author}}</a>
+                        </div>
+                        <img src="/media/{{post.image}}" width="100%"></img>
+                        <div style="padding:20px">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            <i class="fa-solid fa-thumbs-down"></i>
+                        </div>
+                        
+                    </div>
+                    <br>
+                    <br>
+                {% endfor %}
+            </div>
+            <div class="col-sm-3">
+                <div class="profile-summary">
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            {% if user.user_profile.profile_pic %}
+                                <img src="/media/{{ user.user_profile.profile_pic }}" width="40px" height="40px" class="rounded-circle" alt="">
+                            {% else %}
+                                <img src="/media/profile_pics/profile-pic.jpg" width="40px" height="40px" class="rounded-circle" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.username }}
+                            <br>
+                            {{ user.user_profile.full_name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
